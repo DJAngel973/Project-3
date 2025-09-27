@@ -3,7 +3,7 @@ package co.edu.poli.model;
 /**
  * Represents a student with id, name, and email.
  * */
-public class student {
+public class Student {
     private String id;
     private String name;
     private String email;
@@ -11,7 +11,7 @@ public class student {
     /**
      * Default constructor.
      * */
-    public student() {
+    public Student() {
     }
 
     /**
@@ -20,7 +20,7 @@ public class student {
      * @param name Student's name
      * @param email Student's email
      * */
-    public student(String id, String name, String email) {
+    public Student(String id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
