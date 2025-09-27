@@ -1,4 +1,4 @@
-package co.edu.poli;
+package co.edu.devSenior;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

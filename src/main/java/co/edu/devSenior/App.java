@@ -1,4 +1,4 @@
-package co.edu.poli;
+package co.edu.devSenior;
 
 /**
  * Hello world!

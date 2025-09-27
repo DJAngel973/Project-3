@@ -1,6 +1,6 @@
-package co.edu.poli.service;
+package co.edu.devSenior.service;
 
-import co.edu.poli.model.Course;
+import co.edu.devSenior.model.Course;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package co.edu.poli.model;
+package co.edu.devSenior.model;
 
 /**
  * Represents a course with id and name.

@@ -1,7 +1,7 @@
-package co.edu.poli.service;
+package co.edu.devSenior.service;
 
-import co.edu.poli.exception.StudentAlreadyExistsException;
-import co.edu.poli.model.Student;
+import co.edu.devSenior.exception.StudentAlreadyExistsException;
+import co.edu.devSenior.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;

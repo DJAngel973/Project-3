@@ -1,4 +1,4 @@
-package co.edu.poli.model;
+package co.edu.devSenior.model;
 
 /**
  * Represents an enrollment of a student in a course.
