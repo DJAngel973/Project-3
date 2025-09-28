@@ -45,4 +45,9 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Estudiante %s con id %s, correo: %s", name, id, email);
+    }
 }

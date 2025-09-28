@@ -19,4 +19,9 @@ public class Enrollment {
 
     public void setStudent(Student student) {this.student = student;}
     public void setCourse(Course course) {this.course = course;}
+
+    @Override
+    public String toString() {
+        return String.format("Estudiante %s inscripto al curso: %s-%s", student.getName(), course.getName(), course.getId());
+    }
 }
