@@ -1,10 +1,11 @@
 package co.edu.devSenior.service;
 
 import co.edu.devSenior.exception.StudentNotFoundException;
-import co.edu.devSenior.model.Enrollment;
 import co.edu.devSenior.model.Course;
+import co.edu.devSenior.model.Enrollment;
 import co.edu.devSenior.model.Student;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
  * Service to manage enrollments of students in courses using Map<Course, List<Student>>.
  * */
 public class EnrollmentService {
-    private final Map<Course, List<Student>> enrollments;
+    private final Map<Course, List<Enrollment>> enrollments;
 
     public EnrollmentService() {
         this.enrollments = new HashMap<>();
@@ -27,15 +28,18 @@ public class EnrollmentService {
      * @throws IllegalArgumentException if the course is at full capacity or the student is already enrolled.
      * */
     public void enrollStudentInCourse(Course course, Student student) {
-        List<Student> students = enrollments.getOrDefault(course, new ArrayList<>());
-        if (students.size() >= course.getCapacity()) {
+        List<Enrollment> courseEnrollments = enrollments.getOrDefault(course, new ArrayList<>());
+        if (courseEnrollments.size() >= course.getCapacity()) {
             throw new IllegalArgumentException(String.format("El curso %s ya esta lleno.", course.getName()));
         }
-        if (students.contains(student)) {
-            throw new IllegalArgumentException(String.format("El estudiante %s ya está inscrito en el curso %s", student.getName(), course.getName()));
+        for (Enrollment enrollment : courseEnrollments) {
+            if (enrollment.getStudent().equals(student)) {
+                throw new IllegalArgumentException(String.format("El estudiante %s ya está inscrito en el curso %s", student.getName(), course.getName()));
+            }
         }
-        students.add(student);
-        enrollments.put(course, students);
+        Enrollment enrollment = new Enrollment(student, course, LocalDate.now());
+        courseEnrollments.add(enrollment);
+        enrollments.put(course, courseEnrollments);
     }
 
     /**
@@ -44,7 +48,13 @@ public class EnrollmentService {
      * @return The list of enrolled students.
      * */
     public List<Student> getStudentsInCourse(Course course) {
-        return new ArrayList<>(enrollments.getOrDefault(course, new ArrayList<>()));
+        List<Student> students = new ArrayList<>();
+        List<Enrollment> courseEnrollments = enrollments.getOrDefault(course, new ArrayList<>());
+
+        for (Enrollment enrollment : courseEnrollments){
+            students.add(enrollment.getStudent());
+        }
+        return students;
     }
 
     /**
@@ -55,14 +65,25 @@ public class EnrollmentService {
      * */
     public List<Course> getCoursesForStudent(Student student) {
         List<Course> enrolledCourses = new ArrayList<>();
-        for (Map.Entry<Course, List<Student>> entry : enrollments.entrySet()) {
-            if (entry.getValue().contains(student)) {
-                enrolledCourses.add(entry.getKey());
+        for (Map.Entry<Course, List<Enrollment>> entry : enrollments.entrySet()) {
+            for (Enrollment enrollment : entry.getValue()) {
+                if (enrollment.getStudent().equals(student)) {
+                    enrolledCourses.add(enrollment.getCourse());
+                }
             }
         }
         if (enrolledCourses.isEmpty()) {
             throw new StudentNotFoundException(String.format("El estudiante %s no tiene inscripciones o no existe.", student.getName()));
         }
         return enrolledCourses;
+    }
+
+    /**
+     * Retrieves the list of enrollments for a course.
+     * @param course The course to get the enrollments for.
+     * @return The list of enrollments.
+     * */
+    public List<Enrollment> getEnrollmentsForCourse(Course course) {
+        return new ArrayList<>(enrollments.getOrDefault(course, new ArrayList<>()));
     }
 }
