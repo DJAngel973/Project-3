@@ -23,4 +23,9 @@ public class Course {
     public void setId(String id) {this.id = id;}
     public void setName(String name) {this.name = name;}
     public void setCapacity(Integer capacity) {this.capacity = capacity;}
+
+    @Override
+    public String toString() {
+        return String.format("Curso: %s-código %s, capacidad: %d", name, id, capacity);
+    }
 }
