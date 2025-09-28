@@ -1,13 +1,14 @@
 package co.edu.devSenior;
 
+import co.edu.devSenior.controller.AppController;
+
 /**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+ * Main application entry point.
+ * Initializes and starts the course management system.
+ * */
+public class App {
+    public static void main(String[] args) {
+        AppController appController = new AppController();
+        appController.run();
     }
 }
