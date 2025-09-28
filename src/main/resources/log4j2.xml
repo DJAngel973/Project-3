@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <!-- Definimos appenders (dónde se registrarán los logs) -->
+    <Appenders>
+        <!-- Appender para la consola -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %c - %msg%n" />
+        </Console>
+    </Appenders>
+
+    <!-- Configurar loggers -->
+    <Loggers>
+        <!-- Logger para la aplicación, nivel INFO por defecto -->
+        <Root level="info">
+            <AppenderRef ref="Console" />
+        </Root>
+
+        <!-- Logger específico para CourseService con nivel DEBUG -->
+        <Logger name="co.edu.devSenior.service.CourseService" level="debug" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+    </Loggers>
+</Configuration>

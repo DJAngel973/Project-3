@@ -34,7 +34,7 @@ public class AppController {
             courseView.displayMessage("\n======= Sistema de Gestión de cursos =======");
             courseView.displayMessage("1. Crear curso.");
             courseView.displayMessage("2. Ver todos los cursos.");
-            courseView.displayMessage("3. Buscar curso por ID.");
+            courseView.displayMessage("3. Buscar curso por código del curso.");
             courseView.displayMessage("4. Salir.");
             String option = courseView.getInput("Seleccione una opción: ");
 

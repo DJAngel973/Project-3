@@ -34,11 +34,11 @@ public class CourseService {
         logger.info("Buscando el curso con código {}", id);
         for (Course course : courses) {
             if (course.getId().equals(id)){
-                logger.error("Curso de código {} encontrado.", id);
+                logger.info("Curso de código {} encontrado.", id);
                 return course;
             }
         }
         logger.error("Curso de código {} no existe.", id);
-        throw new IllegalArgumentException(String.format("El curso con el id %s no existe.", id));
+        throw new IllegalArgumentException(String.format("El curso con el código %s no existe.", id));
     }
 }

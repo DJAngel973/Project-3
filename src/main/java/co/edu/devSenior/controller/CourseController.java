@@ -51,10 +51,10 @@ public class CourseController {
     }
 
     /**
-     * Searches for a course by its ID, displaying the result or an error message.
+     * Searches for a course by its código, displaying the result or an error message.
      * */
     public void searchCourseById() {
-        String id = courseView.getInput("Ingresa el ID del curso a buscar: ");
+        String id = courseView.getInput("Ingresa el código del curso a buscar: ");
 
         try {
             Course course = courseService.searchCourseById(id);
