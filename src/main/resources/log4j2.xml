@@ -6,6 +6,11 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %c - %msg%n" />
         </Console>
+
+        <!-- Appender para registrar logs en un archivo -->
+        <File name="FileLogger" fileName="logs/application.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %c - %msg%n" />
+        </File>
     </Appenders>
 
     <!-- Configurar loggers -->
@@ -13,11 +18,13 @@
         <!-- Logger para la aplicación, nivel INFO por defecto -->
         <Root level="info">
             <AppenderRef ref="Console" />
+            <AppenderRef ref="FileLogger" />
         </Root>
 
         <!-- Logger específico para CourseService con nivel DEBUG -->
         <Logger name="co.edu.devSenior.service.CourseService" level="debug" additivity="false">
             <AppenderRef ref="Console" />
+            <AppenderRef ref="FileLogger" />
         </Logger>
     </Loggers>
 </Configuration>
