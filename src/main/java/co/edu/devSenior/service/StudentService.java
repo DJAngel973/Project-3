@@ -40,4 +40,19 @@ public class StudentService {
         logger.info("Estudiante {} creado con id {}.", name, id);
         return student;
     }
+
+    /**
+     * Retrieves a student by their ID.
+     * @param id The ID of the student to retrieve.
+     * @return The student with the specified ID.
+     * @throws IllegalArgumentException If no student with the specified ID is found.
+     */
+    public Student getStudentById(String id) {
+        for (Student student : students) {
+            if (student.getId().equals(id)) {
+                return student;
+            }
+        }
+        throw new IllegalArgumentException(String.format("No se encontró un estudiante con el ID: %s", id));
+    }
 }
