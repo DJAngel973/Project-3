@@ -42,11 +42,11 @@ public class EnrollmentController {
             String studentId = enrollmentView.getInput("Ingresa el ID del estudiante: ");
             Student student;
             try {
-                String studentName = enrollmentView.getInput("Ingresa el nombre del estudiante: ");
-                String studentEmail = enrollmentView.getInput("Ingresa el correo de estudiante: ");
                 student = studentService.getStudentById(studentId);
             } catch (IllegalArgumentException error) {
-                student = studentService.getStudentById(studentId);
+                String studentName = enrollmentView.getInput("Ingresa el nombre del estudiante: ");
+                String studentEmail = enrollmentView.getInput("Ingresa el correo del estudiante: ");
+                student = studentService.createStudent(studentId, studentName, studentEmail);
             }
             enrollmentService.enrollStudentInCourse(course, student);
             enrollmentView.displayMessage(String.format("Estudiante inscrito exitosamente al curso %s.", course.getName()));

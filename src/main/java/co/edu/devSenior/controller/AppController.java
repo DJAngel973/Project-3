@@ -1,7 +1,10 @@
 package co.edu.devSenior.controller;
 
 import co.edu.devSenior.view.CourseView;
+import co.edu.devSenior.view.EnrollmentView;
 import co.edu.devSenior.service.CourseService;
+import co.edu.devSenior.service.EnrollmentService;
+import co.edu.devSenior.service.StudentService;
 
 import java.util.Scanner;
 
@@ -11,17 +14,20 @@ import java.util.Scanner;
  * */
 public class AppController {
     private final CourseController courseController;
+    private final EnrollmentController enrollmentController;
     private final CourseView courseView;
-    private final Scanner input;
 
     /**
      * Constructs the AppController and initializes its dependencies.
      * */
     public AppController() {
         CourseService courseService = new CourseService();
+        EnrollmentService enrollmentService = new EnrollmentService();
+        StudentService studentService = new StudentService();
+        EnrollmentView enrollmentView = new EnrollmentView();
         this.courseView = new CourseView();
         this.courseController = new CourseController(courseService, courseView);
-        this.input = new Scanner(System.in);
+        this.enrollmentController = new EnrollmentController(enrollmentService, enrollmentView, courseService, studentService);
     }
 
     /**
@@ -35,7 +41,8 @@ public class AppController {
             courseView.displayMessage("1. Crear curso.");
             courseView.displayMessage("2. Ver todos los cursos.");
             courseView.displayMessage("3. Buscar curso por código del curso.");
-            courseView.displayMessage("4. Salir.");
+            courseView.displayMessage("4. Inscribir estudiante en un curso.");
+            courseView.displayMessage("5. Salir.");
             String option = courseView.getInput("Seleccione una opción: ");
 
             switch (option) {
@@ -49,6 +56,9 @@ public class AppController {
                     courseController.searchCourseById();
                     break;
                 case "4":
+                    enrollmentController.enrollStudentInCourse();
+                    break;
+                case "5":
                     running = false;
                     courseView.displayMessage("Gracias, saliendo del sistema...");
                     break;
