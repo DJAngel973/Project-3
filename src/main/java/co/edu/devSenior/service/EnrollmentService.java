@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Service to manage enrollments of students in courses using Map<Course, List<Student>>.
  * */
 public class EnrollmentService {
+    private static final Logger logger = LogManager.getLogger(EnrollmentService.class);
     private final Map<Course, List<Enrollment>> enrollments;
 
     public EnrollmentService() {
@@ -28,17 +31,21 @@ public class EnrollmentService {
      * @throws IllegalArgumentException if the course is at full capacity or the student is already enrolled.
      * */
     public void enrollStudentInCourse(Course course, Student student) {
+        logger.info("Inscribiendo un estudiante al curso {}.", course.getName());
         List<Enrollment> courseEnrollments = enrollments.getOrDefault(course, new ArrayList<>());
         if (courseEnrollments.size() >= course.getCapacity()) {
+            logger.error("Error: el curso {}, ya esta lleno.", course.getName());
             throw new IllegalArgumentException(String.format("El curso %s ya esta lleno.", course.getName()));
         }
         for (Enrollment enrollment : courseEnrollments) {
             if (enrollment.getStudent().equals(student)) {
+                logger.error("Error: el estudiante {} ya esta inscrito en el curso {}.", student.getName(), course.getName());
                 throw new IllegalArgumentException(String.format("El estudiante %s ya está inscrito en el curso %s", student.getName(), course.getName()));
             }
         }
         Enrollment enrollment = new Enrollment(student, course, LocalDate.now());
         courseEnrollments.add(enrollment);
+        logger.info("Estudiante {} inscrito al curso {}.", student.getName(), course.getName());
         enrollments.put(course, courseEnrollments);
     }
 
@@ -64,15 +71,18 @@ public class EnrollmentService {
      * @throws StudentNotFoundException if the student has no enrollments or is not found.
      * */
     public List<Course> getCoursesForStudent(Student student) {
+        logger.info("Generando listando cursos del estudiante {}.", student.getName());
         List<Course> enrolledCourses = new ArrayList<>();
         for (Map.Entry<Course, List<Enrollment>> entry : enrollments.entrySet()) {
             for (Enrollment enrollment : entry.getValue()) {
                 if (enrollment.getStudent().equals(student)) {
+                    logger.info("Cursos estudiante {}.", student.getName());
                     enrolledCourses.add(enrollment.getCourse());
                 }
             }
         }
         if (enrolledCourses.isEmpty()) {
+            logger.error("Error: el estudiante {} no tiene inscripciones o no existe.", student.getName());
             throw new StudentNotFoundException(String.format("El estudiante %s no tiene inscripciones o no existe.", student.getName()));
         }
         return enrolledCourses;
@@ -84,6 +94,7 @@ public class EnrollmentService {
      * @return The list of enrollments.
      * */
     public List<Enrollment> getEnrollmentsForCourse(Course course) {
+        logger.info("Generando listado de cursos.");
         return new ArrayList<>(enrollments.getOrDefault(course, new ArrayList<>()));
     }
 }
