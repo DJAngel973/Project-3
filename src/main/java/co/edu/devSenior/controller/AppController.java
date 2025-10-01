@@ -43,7 +43,8 @@ public class AppController {
             courseView.displayMessage("3. Buscar curso por código del curso.");
             courseView.displayMessage("4. Inscribir estudiante en un curso.");
             courseView.displayMessage("5. Listar estudiantes inscriptos por curso.");
-            courseView.displayMessage("6. Salir.");
+            courseView.displayMessage("6. Listar cursos del estudiante.");
+            courseView.displayMessage("7. Salir.");
             String option = courseView.getInput("Seleccione una opción: ");
 
             switch (option) {
@@ -63,6 +64,9 @@ public class AppController {
                     enrollmentController.getStudentsInCourse();
                     break;
                 case "6":
+                    enrollmentController.getCoursesForStudent();
+                    break;
+                case "7":
                     running = false;
                     courseView.displayMessage("Gracias, saliendo del sistema...");
                     break;
