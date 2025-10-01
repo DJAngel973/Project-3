@@ -1,0 +1,119 @@
+@startuml
+' We define the title of the diagram.
+title Diagrama de Clases -  Sistema de Gestión Académica
+
+' Main Package.
+package "co.edu.devSenior.model" {
+    class Course {
+        - String id
+        - String name
+        - int capacity
+        --
+        + getId(): String
+        + getName(): String
+        + getCapacity(): int
+    }
+
+    class Student {
+        - String id
+        - String name
+        - String email
+        --
+        + getId(): String
+        + getName(): String
+        + getEmail(): String
+    }
+
+    class Enrollment {
+        - Student student
+        - Course Course
+        - LocalDate enrollmentDate
+        --
+        + getStudent(): Student
+        + getCourse(): Course
+        + getEnrollmentDate(): LocalDate
+    }
+}
+
+package "co.edu.devSenior.service" {
+    class CourseService {
+        - List<Course> courses
+        --
+        + createCourse(String id, String name, String email): Student
+        + createCourses(): List<Course>
+        + searchCourseById(String id): Course
+    }
+
+    class StudentService {
+        - List<Student> students
+        --
+        + createStudent(String id, String name, String email): Student
+        + getStudentById(String id): Student
+    }
+
+    class EnrollmentService {
+        - Map<Course, List<Enrollment>> enrollments
+        --
+        + enrollStudentInCourse(Course course, Student student): void
+        + getStudentsInCourse(Course course): List<Student>
+        + getCoursesForStudent(Student student): List<Course>
+        + getEnrollmentsForCourse(Course course): List<Enrollment>
+    }
+}
+
+package "co.edu.devSenior.controller" {
+    class AppController {
+        - CourseController courseController
+        - EnrollmentController enrollmentController
+        --
+        + run(): void
+    }
+
+    class CourseController {
+        - CourseService courseService
+        - CourseView courseView
+        --
+        + createCourse(): void
+        + listCourses(): void
+    }
+
+    class EnrollmentController {
+        - EnrollmentService enrollmentService
+        - EnrollmentView enrollmentView
+        - CourseService courseService
+        - StudentService studentService
+        --
+        + enrollStudentInCourse(): void
+        + getStudentsInCourse(): void
+        + getCoursesForStudent(): void
+        + getEnrollmentsForCourse(): void
+    }
+}
+
+package "co.edu.devSenior.view" {
+    class CourseView {
+        + displayMessage(String message): void
+        + getInput(String prompt): String
+    }
+
+    class EnrollmentView {
+        + displayMessage(String message): void
+        + displayError(String errorMessage): void
+        + getInput(String prompt): String
+    }
+}
+
+' Relationships between classes
+Course "1" *-- "0..*" Enrollment : tiene
+Student "1" *-- "0..*" Enrollment : participa
+CourseService "1" *-- "0..*" Course : gestiona
+StudentService "1" *-- "0..*" Student : gestiona
+EnrollmentService "1" *-- "0..*" Enrollment : gestiona
+AppController "1" *-- "1" CourseController : usa
+AppController "1" *-- "1" EnrollmentController : usa
+CourseController "1" *-- "1" CourseService : usa
+EnrollmentController "1" *-- "1" EnrollmentService : usa
+EnrollmentController "1" *-- "1" CourseService : usa
+EnrollmentController "1" *-- "1" StudentService : usa
+
+@enduml
