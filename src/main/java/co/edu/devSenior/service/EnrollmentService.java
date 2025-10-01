@@ -55,10 +55,12 @@ public class EnrollmentService {
      * @return The list of enrolled students.
      * */
     public List<Student> getStudentsInCourse(Course course) {
+        logger.info("Obteniendo la lista de estudiantes inscritos en el curso {}.", course.getName());
         List<Student> students = new ArrayList<>();
         List<Enrollment> courseEnrollments = enrollments.getOrDefault(course, new ArrayList<>());
 
         for (Enrollment enrollment : courseEnrollments){
+            logger.info("El cursi {} tiene {} incripciones.", course.getName(), courseEnrollments.size());
             students.add(enrollment.getStudent());
         }
         return students;
