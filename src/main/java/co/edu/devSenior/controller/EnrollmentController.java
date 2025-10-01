@@ -37,6 +37,8 @@ public class EnrollmentController {
     /**
      * Handles the process of enrolling a student in a course.
      * Prompts the user for course and student details, and performs the enrollment.
+     * @throws IlegalArgumentException if the course or student details are invalid.
+     * @throws NullPointException if any required data is missing.
      */
     public void enrollStudentInCourse() {
         try {
@@ -59,7 +61,9 @@ public class EnrollmentController {
     }
 
     /**
-     *
+     * Retrieves and displays the list of students enrolled in a specific course.
+     * Prompts the user for the course ID, retrieves the students, and displays them.
+     * @throws IlegalArgumentException if the course ID is invalid or the course does not exist.
      */
     public void getStudentsInCourse() {
         try {
@@ -80,7 +84,10 @@ public class EnrollmentController {
     }
 
     /**
-     *
+     * Retrieves and displays the list of courses a specific student is enrolled in.
+     * Prompts the user for the student ID, retrieves the courses, and displays them.
+     * @throws IllegalArgumentException if the student ID is invalid or the student does not exist.
+     * @throwa StudentNotFoundException it the student has no enrollments.
      */
     public void getCoursesForStudent() {
         try {
@@ -103,7 +110,9 @@ public class EnrollmentController {
     }
 
     /**
-     *
+     * Retrieves and displays the list of enrollments for a specific course.
+     * Prompts the user for the course ID, retrieves the enrollments, and displays them.
+     * @throws IllegalArgumentException if the course ID is invalid or the course does not exist.
      */
     public void getEnrollmentsForCourse() {
         try {
