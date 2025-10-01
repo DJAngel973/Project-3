@@ -60,7 +60,7 @@ public class EnrollmentService {
         List<Enrollment> courseEnrollments = enrollments.getOrDefault(course, new ArrayList<>());
 
         for (Enrollment enrollment : courseEnrollments){
-            logger.info("El cursi {} tiene {} incripciones.", course.getName(), courseEnrollments.size());
+            logger.info("El curso {} tiene {} incripciones.", course.getName(), courseEnrollments.size());
             students.add(enrollment.getStudent());
         }
         return students;

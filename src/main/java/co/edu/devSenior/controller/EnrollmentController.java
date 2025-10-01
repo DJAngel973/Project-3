@@ -5,6 +5,7 @@ import co.edu.devSenior.service.CourseService;
 import co.edu.devSenior.service.EnrollmentService;
 import co.edu.devSenior.service.StudentService;
 import co.edu.devSenior.view.EnrollmentView;
+import java.util.List;
 import co.edu.devSenior.model.Student;;
 
 /**
@@ -52,6 +53,27 @@ public class EnrollmentController {
             enrollmentView.displayMessage(String.format("Estudiante inscrito exitosamente al curso %s.", course.getName()));
         } catch (IllegalArgumentException | NullPointerException error) {
             enrollmentView.displayError(String.format("Error al inscribir al estudiante: %s", error.getMessage()));
+        }
+    }
+
+    /**
+     *
+     */
+    public void getStudentsInCourse() {
+        try {
+            String courseId = enrollmentView.getInput("Ingresa el código del curso: ");
+            Course course = courseService.searchCourseById(courseId);
+            List<Student> students = enrollmentService.getStudentsInCourse(course);
+            if (students.isEmpty()) {
+                enrollmentView.displayMessage("No hay estudiantes inscritos en este curso.");
+            } else {
+                enrollmentView.displayMessage(String.format("Estudiantes inscriptos en el curso %s-%s:", course.getName(), course.getId()));
+                for (Student student : students) {
+                    enrollmentView.displayMessage(String.format("- %s (ID: %s)", student.getName(), student.getId()));
+                }
+            }
+        } catch (IllegalArgumentException error) {
+            enrollmentView.displayError(String.format("Error: %s", error.getMessage()));
         }
     }
 }
