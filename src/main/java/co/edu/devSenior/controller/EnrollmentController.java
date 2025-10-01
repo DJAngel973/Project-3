@@ -2,6 +2,7 @@ package co.edu.devSenior.controller;
 
 import co.edu.devSenior.exception.StudentNotFoundException;
 import co.edu.devSenior.model.Course;
+import co.edu.devSenior.model.Enrollment;
 import co.edu.devSenior.service.CourseService;
 import co.edu.devSenior.service.EnrollmentService;
 import co.edu.devSenior.service.StudentService;
@@ -97,6 +98,29 @@ public class EnrollmentController {
         } catch (IllegalArgumentException error) {
             enrollmentView.displayError(String.format("Error: %s", error.getMessage()));
         } catch (StudentNotFoundException error) {
+            enrollmentView.displayError(String.format("Error: %s", error.getMessage()));
+        }
+    }
+
+    /**
+     *
+     */
+    public void getEnrollmentsForCourse() {
+        try {
+            String courseId = enrollmentView.getInput("Ingresa el código del curso: ");
+            Course course = courseService.searchCourseById(courseId);
+            List<Enrollment> enrollments = enrollmentService.getEnrollmentsForCourse(course);
+            if (enrollments.isEmpty()) {
+                enrollmentView.displayMessage("No hay inscripciones en el curso.");
+            } else {
+                enrollmentView.displayMessage(String.format("Inscripciones en el curso %s-%s", course.getName(), course.getId()));
+                for (Enrollment enrollment : enrollments) {
+                    Student student = enrollment.getStudent();
+                    enrollmentView.displayMessage(String.format("-Estudiante: %s (ID: %s), Fecha de inscripción: %s",
+                    student.getName(), student.getId(), enrollment.getEnrollmentDate()));
+                }
+            }
+        } catch (IllegalArgumentException error) {
             enrollmentView.displayError(String.format("Error: %s", error.getMessage()));
         }
     }
