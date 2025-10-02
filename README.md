@@ -19,7 +19,7 @@ This project demonstrates the use Java and Maven to build an academic management
 
 ## UML Diagrams
 
-![UML Diagrams](src/main/uml/Enrollment.plantuml)
+![UML Diagrams](src/main/uml/EnrollmentUML.png)
 
 ## Technologíes
 
