@@ -80,7 +80,8 @@ src/
 │       └── log4j2.xml
 ├── test/
 │   └── java/co/edu/devSenior/
-│       └── CourseServiceTest.java
+│       ├── CourseServiceTest.java
+│       └── StudentServiceTest.java
 └── uml/
     ├── Enrollment.plantuml
     └── EnrollmentUML.png
